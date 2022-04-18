@@ -4,38 +4,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emoji Stars Rating | CodingNepal</title>
+    <title>Vertical Card Slider | CodingNepal</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
 <body>
   <div class="wrapper">
-    <input type="radio" name="rate" id="star-1">
-    <input type="radio" name="rate" id="star-2">
-    <input type="radio" name="rate" id="star-3">
-    <input type="radio" name="rate" id="star-4">
-    <input type="radio" name="rate" id="star-5">
-    <div class="content">
-      <div class="outer">
-        <div class="emojis">
-          <li class="slideImg"><img src="emojis/emoji-1.png" alt=""></li>
-          <li><img src="emojis/emoji-2.png" alt=""></li>
-          <li><img src="emojis/emoji-3.png" alt=""></li>
-          <li><img src="emojis/emoji-4.png" alt=""></li>
-          li><img src="emojis/emoji-5.png" alt=""></li>
+    <div class="outer">
+      <div class="card" style="--delay:-1;">
+        <div class="content">
+          <div class="img"><img src="#" alt=""></div>
+          <div class="details">
+            <span class="name">Sumit Kapoor</span>
+            <p>Frontend Developer</p>
+          </div>
         </div>
+        <a href="#">Follow</a>
       </div>
-      <div class="stars">
-        <label for="star-1" class="star-1 fas fa-star"></label>
-        <label for="star-2" class="star-2 fas fa-star"></label>
-        <label for="star-3" class="star-3 fas fa-star"></label>
-        <label for="star-4" class="star-4 fas fa-star"></label>
-        <label for="star-5" class="star-5 fas fa-star"></label>
+      <div class="card" style="--delay:0;">
+        <div class="content">
+          <div class="img"><img src="#" alt=""></div>
+          <div class="details">
+            <span class="name">Andrew Neil</span>
+            <p>YouTuber & Blogger</p>
+          </div>
+        </div>
+        <a href="#">Follow</a>
       </div>
-    </div>
-    <div class="footer">
-      <span class="text"></span>
-      <span class="numb"></span>
+      <div class="card" style="--delay:1;">
+        <div class="content">
+          <div class="img"><img src="#" alt=""></div>
+          <div class="details">
+            <span class="name">Jasmine Carter</span>
+            <p>Freelancer & Vlogger</p>
+          </div>
+        </div>
+        <a href="#">Follow</a>
+      </div>
+      <div class="card" style="--delay:2;">
+        <div class="content">
+          <div class="img"><img src="#" alt=""></div>
+          <div class="details">
+            <span class="name">Justin Chung</span>
+            <p>Backend Developer</p>
+          </div>
+        </div>
+        <a href="#">Follow</a>
+      </div>
+      <div class="card" style="--delay:2;">
+        <div class="content">
+          <div class="img"><img src="#" alt=""></div>
+          <div class="details">
+            <span class="name">Adrina Calvo</span>
+            <p>Teacher & Advertiser</p>
+          </div>
+        </div>
+        <a href="#">Follow</a>
+      </div>
     </div>
   </div>
 
