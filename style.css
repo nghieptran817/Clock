@@ -3,155 +3,100 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 body{
+  width: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background: linear-gradient(#FED151, #DE981F);
-}
-.wrapper{
-  background: #f6f6f6;
-  max-width: 360px;
-  width: 100%;
-  border-radius: 10px;
-  box-shadow: 0px 10px 15px rgba(0,0,0,0.1);
-}
-.wrapper .content{
-  padding: 30px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  background: linear-gradient(to bottom, #bea2e7 0%, #86b7e7 100%);
 }
 .wrapper .outer{
-  height: 135px;
-  width: 135px;
-  overflow: hidden;
-}
-.outer .emojis{
-  height: 500%;
-  display: flex;
-  flex-direction: column;
-}
-.outer .emojis li{
-  height: 20%;
-  width: 100%;
-  list-style: none;
-  transition: all 0.3s ease;
-}
-.outer li img{
-  height: 100%;
-  width: 100%;
-}
-#star-2:checked ~ .content .emojis .slideImg{
-  margin-top: -135px;
-}
-#star-3:checked ~ .content .emojis .slideImg{
-  margin-top: -270px;
-}
-#star-4:checked ~ .content .emojis .slideImg{
-  margin-top: -405px;
-}
-#star-5:checked ~ .content .emojis .slideImg{
-  margin-top: -540px;
-}
-.wrapper .stars{
-  margin-top: 30px;
-}
-.stars label{
-  font-size: 30px;
-  margin: 0 3px;
-  color: #ccc;
-}
-#star-1:hover ~ .content .stars .star-1,
-#star-1:checked ~ .content .stars .star-1,
-
-#star-2:hover ~ .content .stars .star-1,
-#star-2:hover ~ .content .stars .star-2,
-#star-2:checked ~ .content .stars .star-1,
-#star-2:checked ~ .content .stars .star-2,
-
-#star-3:hover ~ .content .stars .star-1,
-#star-3:hover ~ .content .stars .star-2,
-#star-3:hover ~ .content .stars .star-3,
-#star-3:checked ~ .content .stars .star-1,
-#star-3:checked ~ .content .stars .star-2,
-#star-3:checked ~ .content .stars .star-3,
-
-#star-4:hover ~ .content .stars .star-1,
-#star-4:hover ~ .content .stars .star-2,
-#star-4:hover ~ .content .stars .star-3,
-#star-4:hover ~ .content .stars .star-4,
-#star-4:checked ~ .content .stars .star-1,
-#star-4:checked ~ .content .stars .star-2,
-#star-4:checked ~ .content .stars .star-3,
-#star-4:checked ~ .content .stars .star-4,
-
-#star-5:hover ~ .content .stars .star-1,
-#star-5:hover ~ .content .stars .star-2,
-#star-5:hover ~ .content .stars .star-3,
-#star-5:hover ~ .content .stars .star-4,
-#star-5:hover ~ .content .stars .star-5,
-#star-5:checked ~ .content .stars .star-1,
-#star-5:checked ~ .content .stars .star-2,
-#star-5:checked ~ .content .stars .star-3,
-#star-5:checked ~ .content .stars .star-4,
-#star-5:checked ~ .content .stars .star-5{
-  color: #fd4;
-}
-.wrapper .footer{
-  border-top: 1px solid #ccc;
-  background: #f2f2f2;
-  width: 100%;
-  height: 55px;
-  padding: 0 20px;
-  border-radius: 0 0 10px 10px;
   display: flex;
   align-items: center;
+  justify-content: center;
+}
+.wrapper .card{
+  background: #fff;
+  width: 430px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
   justify-content: space-between;
+  border-radius: 100px 20px 20px 100px;
+  box-shadow: 0px 10px 15px rgba(0,0,0,0.1);
+  animation: animate 15s linear infinite;
+  animation-delay: calc(3s * var(--delay));
 }
-.footer span{
-  font-size: 17px;
-  font-weight: 400;
+.outer:hover .card{
+  animation-play-state: paused;
 }
-.footer .text::before{
-  content: "Rate your experience";
+.wrapper .card:last-child{
+  animation-delay: calc(-3s * var(--delay));
 }
-.footer .numb::before{
-  content: "0 out of 5";
+@keyframes animate {
+  0%{
+    opacity: 0;
+    transform: translateY(100%) scale(0.5);
+  }
+  5%, 20%{
+    opacity: 0.4;
+    transform: translateY(100%) scale(0.7);
+  }
+  25%, 40%{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0%) scale(1);
+  }
+  45%, 60%{
+    opacity: 0.4;
+    transform: translateY(-100%) scale(0.7);
+  }
+  65%, 100%{
+    opacity: 0;
+    transform: translateY(-100%) scale(0.5);
+  }
 }
-#star-1:checked ~ .footer .text::before{
-  content: "I just hate it";
+.card .content{
+  display: flex;
+  align-items: center;
 }
-#star-1:checked ~ .footer .numb::before{
-  content: "1 out of 5";
+.wrapper .card .img{
+  height: 90px;
+  width: 90px;
+  position: absolute;
+  left: -5px;
+  background: #fff;
+  border-radius: 50%;
+  padding: 5px;
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
 }
-#star-2:checked ~ .footer .text::before{
-  content: "I don't like it";
+.card .img img{
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }
-#star-2:checked ~ .footer .numb::before{
-  content: "2 out of 5";
+.card .details{
+  margin-left: 80px;
 }
-#star-3:checked ~ .footer .text::before{
-  content: "This is awesome";
+.details span{
+  font-weight: 600;
+  font-size: 18px;
 }
-#star-3:checked ~ .footer .numb::before{
-  content: "3 out of 5";
+.card a{
+  text-decoration: none;
+  padding: 7px 18px;
+  border-radius: 25px;
+  color: #fff;
+  background: linear-gradient(to bottom, #bea2e7 0%, #86b7e7 100%);
+  transition: all 0.3s ease;
 }
-#star-4:checked ~ .footer .text::before{
-  content: "I just like it";
-}
-#star-4:checked ~ .footer .numb::before{
-  content: "4 out of 5";
-}
-#star-5:checked ~ .footer .text::before{
-  content: "I just love it";
-}
-#star-5:checked ~ .footer .numb::before{
-  content: "5 out of 5";
-}
-input[type="radio"]{
-  display: none;
+.card a:hover{
+  transform: scale(0.94);
 }
