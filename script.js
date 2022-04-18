@@ -1,89 +1,65 @@
-const wrapper = document.querySelector(".wrapper"),
-inputPart = document.querySelector(".input-part"),
-infoTxt = inputPart.querySelector(".info-txt"),
-inputField = inputPart.querySelector("input"),
-locationBtn = inputPart.querySelector("button"),
-weatherPart = wrapper.querySelector(".weather-part"),
-wIcon = weatherPart.querySelector("img"),
-arrowBack = wrapper.querySelector("header i");
+const cards = document.querySelectorAll(".card");
 
-let api;
+let matched = 0;
+let cardOne, cardTwo;
+let disableDeck = false;
 
-inputField.addEventListener("keyup", e =>{
-    if(e.key == "Enter" && inputField.value != ""){
-        requestApi(inputField.value);
+function flipCard({target: clickedCard}) {
+    if(cardOne !== clickedCard && !disableDeck) {
+        clickedCard.classList.add("flip");
+        if(!cardOne) {
+            return cardOne = clickedCard;
+        }
+        cardTwo = clickedCard;
+        disableDeck = true;
+        let cardOneImg = cardOne.querySelector(".back-view img").src,
+        cardTwoImg = cardTwo.querySelector(".back-view img").src;
+        matchCards(cardOneImg, cardTwoImg);
     }
-});
+}
 
-locationBtn.addEventListener("click", () =>{
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
-    }else{
-        alert("Your browser not support geolocation api");
+function matchCards(img1, img2) {
+    if(img1 === img2) {
+        matched++;
+        if(matched == 8) {
+            setTimeout(() => {
+                return shuffleCard();
+            }, 1000);
+        }
+        cardOne.removeEventListener("click", flipCard);
+        cardTwo.removeEventListener("click", flipCard);
+        cardOne = cardTwo = "";
+        return disableDeck = false;
     }
-});
+    setTimeout(() => {
+        cardOne.classList.add("shake");
+        cardTwo.classList.add("shake");
+    }, 400);
 
-function requestApi(city){
-    api = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=your_api_key`;
-    fetchData();
+    setTimeout(() => {
+        cardOne.classList.remove("shake", "flip");
+        cardTwo.classList.remove("shake", "flip");
+        cardOne = cardTwo = "";
+        disableDeck = false;
+    }, 1200);
 }
 
-function onSuccess(position){
-    const {latitude, longitude} = position.coords;
-    api = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=your_api_key`;
-    fetchData();
-}
-
-function onError(error){
-    infoTxt.innerText = error.message;
-    infoTxt.classList.add("error");
-}
-
-function fetchData(){
-    infoTxt.innerText = "Getting weather details...";
-    infoTxt.classList.add("pending");
-    fetch(api).then(res => res.json()).then(result => weatherDetails(result)).catch(() =>{
-        infoTxt.innerText = "Something went wrong";
-        infoTxt.classList.replace("pending", "error");
+function shuffleCard() {
+    matched = 0;
+    disableDeck = false;
+    cardOne = cardTwo = "";
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8];
+    arr.sort(() => Math.random() > 0.5 ? 1 : -1);
+    cards.forEach((card, i) => {
+        card.classList.remove("flip");
+        let imgTag = card.querySelector(".back-view img");
+        imgTag.src = `images/img-${arr[i]}.png`;
+        card.addEventListener("click", flipCard);
     });
 }
 
-function weatherDetails(info){
-    if(info.cod == "404"){
-        infoTxt.classList.replace("pending", "error");
-        infoTxt.innerText = `${inputField.value} isn't a valid city name`;
-    }else{
-        const city = info.name;
-        const country = info.sys.country;
-        const {description, id} = info.weather[0];
-        const {temp, feels_like, humidity} = info.main;
-
-        if(id == 800){
-            wIcon.src = "icons/clear.svg";
-        }else if(id >= 200 && id <= 232){
-            wIcon.src = "icons/storm.svg";  
-        }else if(id >= 600 && id <= 622){
-            wIcon.src = "icons/snow.svg";
-        }else if(id >= 701 && id <= 781){
-            wIcon.src = "icons/haze.svg";
-        }else if(id >= 801 && id <= 804){
-            wIcon.src = "icons/cloud.svg";
-        }else if((id >= 500 && id <= 531) || (id >= 300 && id <= 321)){
-            wIcon.src = "icons/rain.svg";
-        }
-        
-        weatherPart.querySelector(".temp .numb").innerText = Math.floor(temp);
-        weatherPart.querySelector(".weather").innerText = description;
-        weatherPart.querySelector(".location span").innerText = `${city}, ${country}`;
-        weatherPart.querySelector(".temp .numb-2").innerText = Math.floor(feels_like);
-        weatherPart.querySelector(".humidity span").innerText = `${humidity}%`;
-        infoTxt.classList.remove("pending", "error");
-        infoTxt.innerText = "";
-        inputField.value = "";
-        wrapper.classList.add("active");
-    }
-}
-
-arrowBack.addEventListener("click", ()=>{
-    wrapper.classList.remove("active");
+shuffleCard();
+    
+cards.forEach(card => {
+    card.addEventListener("click", flipCard);
 });
